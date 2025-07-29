@@ -7,15 +7,18 @@ import ShopCategory from "./Pages/ShopCategory";
 import LoginSignUp from "./Pages/LoginSignUp";
 import Product from "./Pages/Product";
 import Cart from "./Pages/Cart";
+import mens_banner from "./assets/banner_mens.png"
+import womens_banner from "./assets/banner_women.png"
+import kids_banner from "./assets/banner_kids.png"
 
 function App() {
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route path="/" element={<RootLayout />}>
         <Route index element={<Shop/>} />
-        <Route path="mens" element={<ShopCategory/>} />
-        <Route path="womens" element={<ShopCategory/>} />
-        <Route path="kids" element={<ShopCategory/>} />
+        <Route path="mens" element={<ShopCategory banner={mens_banner} category='men'/>} />
+        <Route path="womens" element={<ShopCategory banner={womens_banner} category='women'/>} />
+        <Route path="kids" element={<ShopCategory banner={kids_banner} category='kid'/>} />
         <Route path="login" element={<LoginSignUp/>} />
         <Route path="product" element={<Product/>}>
           <Route path=":productId" element={<Product/>} />

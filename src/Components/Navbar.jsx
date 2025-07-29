@@ -1,8 +1,15 @@
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import logo from "../assets/logo.png"
+import React, { useEffect, useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import logo from "../assets/logo.png";
 
 export default function Navbar() {
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.pathname !== "/") {
+      navigate("/");
+    }
+  }, []);
   const [menu, setMenu] = useState("Shop");
 
   function handleMenu(e) {
@@ -56,16 +63,18 @@ export default function Navbar() {
       </div>
       <div className="flex items-center gap-10 pr-36 relative">
         <button
-          onClick={() =>navigate("/login")}
+          onClick={() => navigate("/login")}
           className="border rounded-4xl w-fit p-1.5 pb-2 px-6 text-zinc-700 active:bg-zinc-100 cursor-pointer"
         >
           Login
         </button>
-        <Link to="/cart" ><img
-          className="w-8 cursor-pointer"
-          src="src/assets/cart_icon.png"
-          alt="Cart-Icon"
-        /></Link>
+        <Link to="/cart">
+          <img
+            className="w-8 cursor-pointer"
+            src="src/assets/cart_icon.png"
+            alt="Cart-Icon"
+          />
+        </Link>
         <span className="bg-red-500 rounded-full h-5 w-5 flex cursor-pointer items-center pl-[5px] pb-[1px] text-white absolute left-37 top-0">
           0
         </span>
