@@ -27,6 +27,7 @@ export default function ShopCategory(props) {
             return (
               <Items
                 key={e.id}
+                id={e.id}
                 discription={e.name}
                 image={e.image}
                 newPrice={e.new_price}

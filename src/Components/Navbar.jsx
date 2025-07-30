@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import logo from "../assets/logo.png";
+import cart_icon from "../assets/cart_icon.png"
 
 export default function Navbar() {
   const location = useLocation();
@@ -12,18 +13,20 @@ export default function Navbar() {
   //   }
   // }, []);
 
-  const xyz = {
-    "/": "Shop",
-    "/mens": "Men",
-    "/womens": "Women",
-    "/kids": "Kids",
-  };
+  // const xyz = {
+  //   "/": "Shop",
+  //   "/mens": "Men",
+  //   "/womens": "Women",
+  //   "/kids": "Kids",
+  // };
+  // const [menu, setMenu] = useState(xyz[location.pathname] || "Shop");
 
-  const [menu, setMenu] = useState(xyz[location.pathname] || "Shop");
+  const [menu, setMenu] = useState("Shop");
 
-  useEffect(() => {
-    setMenu(xyz[location.pathname] || "Shop");
-  },[location.pathname]);
+
+  // useEffect(() => {
+  //   setMenu(xyz[location.pathname] || "Shop");
+  // },[location.pathname]);
 
   function handleMenu(e) {
     const current = e.currentTarget.innerText.trim();
@@ -84,7 +87,7 @@ export default function Navbar() {
         <Link to="/cart">
           <img
             className="w-8 cursor-pointer"
-            src="src/assets/cart_icon.png"
+            src={cart_icon}
             alt="Cart-Icon"
           />
         </Link>
