@@ -5,12 +5,25 @@ import logo from "../assets/logo.png";
 export default function Navbar() {
   const location = useLocation();
 
+  //To Rest Page to Shop on every refresh
+  // useEffect(() => {
+  //   if (location.pathname !== "/") {
+  //     navigate("/");
+  //   }
+  // }, []);
+
+  const xyz = {
+    "/": "Shop",
+    "/mens": "Men",
+    "/womens": "Women",
+    "/kids": "Kids",
+  };
+
+  const [menu, setMenu] = useState(xyz[location.pathname] || "Shop");
+
   useEffect(() => {
-    if (location.pathname !== "/") {
-      navigate("/");
-    }
-  }, []);
-  const [menu, setMenu] = useState("Shop");
+    setMenu(xyz[location.pathname] || "Shop");
+  },[location.pathname]);
 
   function handleMenu(e) {
     const current = e.currentTarget.innerText.trim();
