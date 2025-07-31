@@ -4,12 +4,12 @@ import new_collections from "../assets/new_collections"
 
 export default function NewCollections() {
   return (
-    <section className='flex flex-col justify-center items-center gap-3'>
-      <h1 className='text-4xl font-medium'>NEW COLLECTIONS</h1>
+    <section className='flex flex-col justify-center items-center gap-3 my-10 px-4'>
+      <h1 className='text-3xl md:text-4xl font-medium text-center'>NEW COLLECTIONS</h1>
       <hr className='w-40 border-2 rounded-full' />
-      <div className='flex items-center px-20 py-10 justify-center gap-5 flex-wrap'>
+      <div className='flex items-start justify-center gap-5 flex-wrap w-full max-w-7xl my-10'>
         {new_collections.map((e,i) =>
-          <Items 
+          <Items
             key={e.id}
             id={e.id}
             discription={e.name}
