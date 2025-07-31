@@ -1,8 +1,15 @@
-import React from "react";
+import React, { useContext } from "react";
 import star_icon from "../assets/star_icon.png";
 import star_dull_icon from "../assets/star_dull_icon.png";
+import { ShopContext } from "../Context/ShopContex";
 
 const ProductDisplay = ({ product }) => {
+  const {cartItem,setCartItem} = useContext(ShopContext)
+
+  function addToCart(id){
+    setCartItem(p => ({...p,[id]: p[id]+1}))
+  }
+
   return (
     <section className="flex gap-15 w-[80vw]">
       <div className="flex gap-5">
@@ -56,7 +63,7 @@ const ProductDisplay = ({ product }) => {
           </button>
         </div>
         <div>
-          <button className="bg-red-500 w-[25%] p-2 font-semibold text-white rounded-sm ">ADD TO CART</button>
+          <button onClick={()=>addToCart(product.id)} className="bg-red-500 w-[25%] p-2 font-semibold cursor-pointer text-white rounded-sm ">ADD TO CART</button>
         </div>
         <p><span className="font-semibold mr-1">Category:</span>{product.category.charAt(0).toUpperCase() + product.category.slice(1)}s,T-Shirt,Crop Top</p>
         <p><span className="font-semibold mr-1">Tags:</span>Mordern,Latest</p>

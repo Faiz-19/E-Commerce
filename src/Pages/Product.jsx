@@ -7,10 +7,10 @@ import DiscriptionBox from "../Components/DiscriptionBox";
 import RelatedProducts from "../Components/RelatedProducts";
 
 export default function Product() {
-  const allProductData = useContext(ShopContext);
+  const {all_product} = useContext(ShopContext);
 
   const { productId } = useParams();
-  const product = allProductData.find((e) => e.id === Number(productId));
+  const product = all_product.find((e) => e.id === Number(productId));
   return (
     <main className="flex flex-col items-center gap-5 my-10">
       <BreadCrumbs product={product} />

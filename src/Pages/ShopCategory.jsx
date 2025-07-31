@@ -4,7 +4,7 @@ import dropdown_icon from "../assets/dropdown_icon.png";
 import Items from "../Components/Items";
 
 export default function ShopCategory(props) {
-  const allProductData = useContext(ShopContext);
+  const {all_product} = useContext(ShopContext);
 
   return (
     <section className="flex flex-col items-center gap-5">
@@ -22,7 +22,7 @@ export default function ShopCategory(props) {
         </button>
       </div>
       <div className="flex items-center px-20 py-10 justify-center gap-5 flex-wrap">
-        {allProductData.map((e) => {
+        {all_product.map((e) => {
           if (e.category === props.category) {
             return (
               <Items

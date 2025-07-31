@@ -1,39 +1,44 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import logo from "../assets/logo.png";
-import cart_icon from "../assets/cart_icon.png"
+import cart_icon from "../assets/cart_icon.png";
+import { ShopContext } from "../Context/ShopContex";
 
 export default function Navbar() {
   const location = useLocation();
 
-  //To Rest Page to Shop on every refresh
-  // useEffect(() => {
-  //   if (location.pathname !== "/") {
-  //     navigate("/");
-  //   }
-  // }, []);
-
-  // const xyz = {
-  //   "/": "Shop",
-  //   "/mens": "Men",
-  //   "/womens": "Women",
-  //   "/kids": "Kids",
-  // };
-  // const [menu, setMenu] = useState(xyz[location.pathname] || "Shop");
-
-  const [menu, setMenu] = useState("Shop");
-
-
-  // useEffect(() => {
-  //   setMenu(xyz[location.pathname] || "Shop");
-  // },[location.pathname]);
+  const xyz = {
+    "/": "Shop",
+    "/mens": "Men",
+    "/womens": "Women",
+    "/kids": "Kids",
+  };
+  const [menu, setMenu] = useState(() => {
+    return xyz[location.pathname] || localStorage.getItem("activeMenu") || "";
+  });
+  useEffect(() => {
+    const menuName = xyz[location.pathname];
+    if (menuName) {
+      setMenu(menuName);
+      localStorage.setItem("activeMenu", menuName);
+    }
+  }, [location.pathname]);
 
   function handleMenu(e) {
     const current = e.currentTarget.innerText.trim();
     setMenu(current);
+    localStorage.setItem("activeMenu", current);
   }
 
   const navigate = useNavigate();
+
+  const { cartItem } = useContext(ShopContext);
+
+  let totalCartItems = 0;
+
+  for (const item in cartItem) {
+    totalCartItems += cartItem[item];
+  }
 
   return (
     <nav className="flex items-center justify-between shadow-lg">
@@ -85,14 +90,10 @@ export default function Navbar() {
           Login
         </button>
         <Link to="/cart">
-          <img
-            className="w-8 cursor-pointer"
-            src={cart_icon}
-            alt="Cart-Icon"
-          />
+          <img className="w-8 cursor-pointer" src={cart_icon} alt="Cart-Icon" />
         </Link>
-        <span className="bg-red-500 rounded-full h-5 w-5 flex cursor-pointer items-center pl-[5px] pb-[1px] text-white absolute left-37 top-0">
-          0
+        <span className="bg-red-500 rounded-full cursor-pointer text-white absolute left-37 top-0 h-[22px] w-[22px] flex items-center justify-center">
+          <span className="text-sm">{totalCartItems}</span>
         </span>
       </div>
     </nav>
