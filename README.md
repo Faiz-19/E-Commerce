@@ -1,12 +1,47 @@
-# React + Vite
+# E-Shopper: A Responsive React E-Commerce Website
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A fully-featured, responsive front-end e-commerce application built with modern web technologies.
 
-Currently, two official plugins are available:
+[**Live Demo:**](https://e-commerce-topaz-omega-69.vercel.app/)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+![E-Shopper Screenshot](./public/screenshot.png)
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Features
+
+- **Responsive Design:** A mobile-first approach ensures a seamless experience on any device.
+- **Product Browse:** Users can view products by categories (Men, Women, Kids).
+- **Product Details:** Dedicated page for each product with detailed information.
+- **Shopping Cart:** Fully functional cart to add, remove, and view items.
+- **Modern UI:** Clean and intuitive user interface built with Tailwind CSS.
+
+---
+
+## Tech Stack
+
+- **Framework:** React 19
+- **Routing:** React Router v7
+- **State Management:** React Context API
+- **Styling:** Tailwind CSS
+- **Build Tool:** Vite
+
+---
+
+## Getting Started
+
+To get a local copy up and running, follow these simple steps.
+
+### Prerequisites
+
+You'll need Node.js and npm installed on your machine.
+
+### Installation
+
+1. Clone the repo
+   [git clone](https://github.com/Faiz-19/E-Commerce.git)
+
+2. Install NPM packages
+  npm install
+3. Run the development server
+   npm run dev
