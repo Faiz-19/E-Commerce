@@ -1,41 +1,15 @@
-import React, { useContext, useEffect, useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import React, { useContext } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
 import logo from "../assets/logo.png";
 import cart_icon from "../assets/cart_icon.png";
 import { ShopContext } from "../Context/ShopContex";
 
 export default function Navbar() {
-  const location = useLocation();
-
-  const xyz = {
-    "/": "Shop",
-    "/mens": "Men",
-    "/womens": "Women",
-    "/kids": "Kids",
-  };
-  const [menu, setMenu] = useState(() => {
-    return xyz[location.pathname] || localStorage.getItem("activeMenu") || "";
-  });
-  useEffect(() => {
-    const menuName = xyz[location.pathname];
-    if (menuName) {
-      setMenu(menuName);
-      localStorage.setItem("activeMenu", menuName);
-    }
-  }, [location.pathname]);
-
-  function handleMenu(e) {
-    const current = e.currentTarget.innerText.trim();
-    setMenu(current);
-    localStorage.setItem("activeMenu", current);
-  }
-
   const navigate = useNavigate();
 
   const { cartItem } = useContext(ShopContext);
 
   let totalCartItems = 0;
-
   for (const item in cartItem) {
     totalCartItems += cartItem[item];
   }
@@ -46,42 +20,69 @@ export default function Navbar() {
         <img src={logo} alt="Shopper-Logo" />
         <p className="text-2xl font-semibold">SHOPPER</p>
       </div>
+
       <div>
         <ul className="flex gap-10 text-lg items-center">
-          <Link to="/">
-            <li onClick={handleMenu} className="cursor-pointer">
+          <li>
+            <NavLink
+              to="/"
+              end
+              className={({ isActive }) =>
+                `cursor-pointer transition-colors ${
+                  isActive
+                    ? "text-red-600 border-b-2 border-red-600"
+                    : "text-zinc-600 hover:text-zinc-900"
+                }`
+              }
+            >
               Shop
-              {menu === "Shop" && (
-                <hr className="bg-red-400 rounded-full pt-[3px] ml-0.5 border-0 w-[80%] mt-0.5" />
-              )}
-            </li>
-          </Link>
-          <Link to="/mens">
-            <li onClick={handleMenu} className="cursor-pointer">
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to="/mens"
+              className={({ isActive }) =>
+                `cursor-pointer transition-colors ${
+                  isActive
+                    ? "text-red-600 border-b-2 border-red-600"
+                    : "text-zinc-600 hover:text-zinc-900"
+                }`
+              }
+            >
               Men
-              {menu === "Men" && (
-                <hr className="bg-red-400 rounded-full pt-[3px] ml-0.5 border-0 w-[80%] mt-0.5" />
-              )}
-            </li>
-          </Link>
-          <Link to="/womens">
-            <li onClick={handleMenu} className="cursor-pointer">
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to="/womens"
+              className={({ isActive }) =>
+                `cursor-pointer transition-colors ${
+                  isActive
+                    ? "text-red-600 border-b-2 border-red-600"
+                    : "text-zinc-600 hover:text-zinc-900"
+                }`
+              }
+            >
               Women
-              {menu === "Women" && (
-                <hr className="bg-red-400 rounded-full pt-[3px] ml-0.5 border-0 w-[80%] mt-0.5" />
-              )}
-            </li>
-          </Link>
-          <Link to="/kids">
-            <li onClick={handleMenu} className="cursor-pointer">
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to="/kids"
+              className={({ isActive }) =>
+                `cursor-pointer transition-colors ${
+                  isActive
+                    ? "text-red-600 border-b-2 border-red-600"
+                    : "text-zinc-600 hover:text-zinc-900"
+                }`
+              }
+            >
               Kids
-              {menu === "Kids" && (
-                <hr className="bg-red-400 rounded-full pt-[3px] ml-0.5 border-0 w-[80%] mt-0.5" />
-              )}
-            </li>
-          </Link>
+            </NavLink>
+          </li>
         </ul>
       </div>
+
       <div className="flex items-center gap-10 pr-36 relative">
         <button
           onClick={() => navigate("/login")}
@@ -89,9 +90,9 @@ export default function Navbar() {
         >
           Login
         </button>
-        <Link to="/cart">
+        <NavLink to="/cart">
           <img className="w-8 cursor-pointer" src={cart_icon} alt="Cart-Icon" />
-        </Link>
+        </NavLink>
         <span className="bg-red-500 rounded-full cursor-pointer text-white absolute left-37 top-0 h-[22px] w-[22px] flex items-center justify-center">
           <span className="text-sm">{totalCartItems}</span>
         </span>
