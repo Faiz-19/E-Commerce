@@ -1,0 +1,7 @@
+{
+  "extends": ["eslint:recommended", "prettier"],
+  "rules": {
+    "space-infix-ops": ["error", { "int32Hint": false }],
+    "space-in-parens": ["error", "always"]
+  }
+}
