@@ -1,7 +1,7 @@
-import { User } from "../models/user.model";
-import { ApiError } from "../utils/apiError";
-import { ApiResponse } from "../utils/apiResponse";
-import { asyncHandler } from "../utils/asyncHandler";
+import { User } from "../models/user.model.js";
+import { ApiError } from "../utils/apiError.js";
+import { ApiResponse } from "../utils/apiResponse.js";
+import { asyncHandler } from "../utils/asyncHandler.js";
 
 const generateAccessAndRefreshTokens = async (userId) => {
   try {
@@ -39,6 +39,10 @@ export const registerUser = asyncHandler(async (req, res) => {
     password,
   });
 
+  const { accessToken, refreshToken } = await generateAccessAndRefreshTokens(
+    user._id
+  );
+
   const createdUser = await User.findById(user._id).select(
     "-password -refreshToken"
   );
@@ -49,7 +53,19 @@ export const registerUser = asyncHandler(async (req, res) => {
 
   res
     .status(200)
-    .json(new ApiResponse(200, createdUser, "User register successfully"));
+    .cookie("accessToken", accessToken, options)
+    .cookie("refreshToken", refreshToken, options)
+    .json(
+      new ApiResponse(
+        200,
+        {
+          user: createdUser,
+          accessToken,
+          refreshToken,
+        },
+        "User register successfully"
+      )
+    );
 });
 
 let options = {
@@ -114,7 +130,7 @@ export const logoutUser = asyncHandler(async (req, res) => {
 
   res
     .status(200)
-    .clearCoookie("accessToken", options)
-    .clearCoookie("refreshToken", options)
+    .clearCookie("accessToken", options)
+    .clearCookie("refreshToken", options)
     .json(new ApiResponse(200, {}, "User Logged Out successfully"));
 });
