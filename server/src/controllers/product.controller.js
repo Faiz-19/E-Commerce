@@ -6,7 +6,7 @@ import { asyncHandler } from "../utils/asyncHandler.js";
 export const getPopularProducts = asyncHandler(async (req, res) => {
   const popularProducts = await Product.find({ isPopular: true });
   // console.log(popularProducts);
-  
+
   return res
     .status(200)
     .json(
@@ -52,4 +52,18 @@ export const getIdProduct = asyncHandler(async (req, res) => {
   return res
     .status(200)
     .json(new ApiResponse(200, idProduct, "Product fetched successfully"));
+});
+
+export const getCartItems = asyncHandler(async (req, res) => {
+  const productIds = req.body.ids;
+
+  if (!productIds || productIds.length === 0) {
+    return res.status(200).json(new ApiResponse(200, [], ""));
+  }
+
+  const products = await Product.find({ id: { $in: productIds } });
+
+  return res
+    .status(200)
+    .json(new ApiResponse(200, products, "Cart products fetched"));
 });

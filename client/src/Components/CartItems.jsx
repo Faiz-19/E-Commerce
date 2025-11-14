@@ -1,28 +1,54 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import cross_icon from "../assets/cart_cross_icon.png";
 import { ShopContext } from "../Context/ShopContext";
+import axios from "axios";
 
 export default function CartItems() {
-  const { all_product, cartItem, setCartItem } = useContext(ShopContext);
+  const { cartItem, setCartItem } = useContext(ShopContext);
+
+  const [cartProducts, setCartProducts] = useState([]);
+
+  useEffect(() => {
+    const getCartProducts = async () => {
+      const productIds = Object.keys(cartItem).filter((id) => cartItem[id] < 0);
+
+      if (productIds.length > 0) {
+        try {
+          const res = await axios.post(
+            "http://localhost:3000/api/product/cart",
+            {
+              ids: productIds,
+            }
+          );
+          setCartProducts(res.data.data);
+        } catch (error) {
+          console.error("Error fetching cart products", error);
+        }
+      } else {
+        setCartProducts([]);
+      }
+    };
+    getCartProducts();
+  }, [cartItem]);
 
   function removeFromCart(id) {
     setCartItem((p) => ({ ...p, [id]: p[id] - 1 }));
   }
 
   let totalPrice = 0;
-  all_product.forEach((e) => {
-    if (cartItem[e.id] > 0) {
-      totalPrice += e.new_price * cartItem[e.id];
+  cartProducts.forEach((product) => {
+    if (cartItem[product.id] > 0) {
+      totalPrice += product.new_price * cartItem[product.id];
     }
   });
 
-  const isCartEmpty = Object.values(cartItem).every(value => value === 0);
-
-  if (isCartEmpty) {
+  if (cartProducts.length === 0) {
     return (
       <div className="text-center my-20 px-4">
         <h1 className="text-2xl font-semibold">Your cart is empty.</h1>
-        <p className="text-zinc-500 mt-2">Looks like you haven't added anything to your cart yet.</p>
+        <p className="text-zinc-500 mt-2">
+          Looks like you haven't added anything to your cart yet.
+        </p>
       </div>
     );
   }
@@ -42,12 +68,16 @@ export default function CartItems() {
             </tr>
           </thead>
           <tbody>
-            {all_product.map((e) => {
+            {cartProducts.map((e) => {
               if (cartItem[e.id] > 0) {
                 return (
                   <tr key={e.id} className="border-b h-24">
                     <td className="flex justify-start items-center h-24 pl-2">
-                      <img className="h-20 w-20 object-cover rounded" src={e.image} alt={e.name} />
+                      <img
+                        className="h-20 w-20 object-cover rounded"
+                        src={e.image}
+                        alt={e.name}
+                      />
                     </td>
                     <td className="w-1/3 text-left px-4">{e.name}</td>
                     <td>${e.new_price.toFixed(2)}</td>
@@ -79,11 +109,17 @@ export default function CartItems() {
           if (cartItem[e.id] > 0) {
             return (
               <div key={e.id} className="border rounded-lg p-4 flex gap-4">
-                <img className="w-24 h-24 object-cover rounded" src={e.image} alt={e.name} />
+                <img
+                  className="w-24 h-24 object-cover rounded"
+                  src={e.image}
+                  alt={e.name}
+                />
                 <div className="flex-grow flex flex-col justify-between">
                   <p className="font-semibold text-sm">{e.name}</p>
                   <div className="flex justify-between items-center mt-2">
-                    <p className="text-red-500 font-bold">${e.new_price.toFixed(2)}</p>
+                    <p className="text-red-500 font-bold">
+                      ${e.new_price.toFixed(2)}
+                    </p>
                     <p className="text-sm">Qty: {cartItem[e.id]}</p>
                     <img
                       onClick={() => removeFromCart(e.id)}
@@ -126,8 +162,14 @@ export default function CartItems() {
             If you have a promo code, enter it here
           </p>
           <div className="flex justify-between border rounded-md overflow-hidden">
-            <input className="p-3 bg-transparent w-full" type="text" placeholder="promo code" />
-            <button className="bg-black text-white px-8 hover:bg-zinc-800">Submit</button>
+            <input
+              className="p-3 bg-transparent w-full"
+              type="text"
+              placeholder="promo code"
+            />
+            <button className="bg-black text-white px-8 hover:bg-zinc-800">
+              Submit
+            </button>
           </div>
         </div>
       </div>
