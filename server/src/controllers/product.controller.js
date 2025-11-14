@@ -5,7 +5,7 @@ import { asyncHandler } from "../utils/asyncHandler.js";
 
 export const getPopularProducts = asyncHandler(async (req, res) => {
   const popularProducts = await Product.find({ isPopular: true });
-  console.log(popularProducts);
+  // console.log(popularProducts);
   
   return res
     .status(200)
@@ -20,7 +20,7 @@ export const getPopularProducts = asyncHandler(async (req, res) => {
 
 export const getNewProducts = asyncHandler(async (req, res) => {
   const newProducts = await Product.find({ isNew: true });
-   console.log(newProducts);
+  //  console.log(newProducts);
   return res
     .status(200)
     .json(
@@ -32,7 +32,7 @@ export const getCategoryProducts = asyncHandler(async (req, res) => {
   const categoryProducts = await Product.find({
     category: req.params.category,
   });
-   console.log(categoryProducts);
+  //  console.log(categoryProducts);
   return res
     .status(200)
     .json(

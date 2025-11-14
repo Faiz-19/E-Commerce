@@ -2,12 +2,12 @@ import React, { useContext, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import logo from "../assets/logo.png";
 import cart_icon from "../assets/cart_icon.png";
-import { ShopContext } from "../Context/ShopContex";
+import { ShopContext } from "../Context/ShopContext.jsx";
 
 export default function Navbar() {
   const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { cartItem } = useContext(ShopContext);
+  const { user,logout,cartItem } = useContext(ShopContext);
 
   let totalCartItems = 0;
   for (const item in cartItem) {
@@ -87,12 +87,17 @@ export default function Navbar() {
       </div>
 
       <div className="flex items-center gap-5 md:gap-10">
-        <button
+        {user?<button
+          onClick={logout}
+          className="border rounded-full w-fit p-1.5 pb-2 px-6 text-zinc-700 active:bg-zinc-100 cursor-pointer hidden sm:block"
+        >
+          Logout
+        </button> :<button
           onClick={() => navigate("/login")}
           className="border rounded-full w-fit p-1.5 pb-2 px-6 text-zinc-700 active:bg-zinc-100 cursor-pointer hidden sm:block"
         >
           Login
-        </button>
+        </button>}
         <NavLink to="/cart" className="relative">
           <img
             className="w-8 cursor-pointer"

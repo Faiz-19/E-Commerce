@@ -1,7 +1,7 @@
 import React, { use, useContext, useEffect, useState } from "react";
 import BreadCrumbs from "../Components/BreadCrumbs";
 import ProductDisplay from "../Components/ProductDisplay";
-// import { ShopContext } from "../Context/ShopContex";
+// import { ShopContext } from "../Context/ShopContext";
 import { useParams } from "react-router-dom";
 import DiscriptionBox from "../Components/DiscriptionBox";
 import RelatedProducts from "../Components/RelatedProducts";

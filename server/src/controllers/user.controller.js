@@ -20,6 +20,12 @@ const generateAccessAndRefreshTokens = async (userId) => {
   }
 };
 
+let options = {
+  httpOnly: true,
+  secure: true,
+  sameSite: "None",
+};
+
 export const registerUser = asyncHandler(async (req, res) => {
   const { name, email, password } = req.body;
 
@@ -37,6 +43,7 @@ export const registerUser = asyncHandler(async (req, res) => {
     name,
     email,
     password,
+    
   });
 
   const { accessToken, refreshToken } = await generateAccessAndRefreshTokens(
@@ -67,12 +74,6 @@ export const registerUser = asyncHandler(async (req, res) => {
       )
     );
 });
-
-let options = {
-  httpOnly: true,
-  secure: process.env.NODE_ENV === "production",
-  sameSite: "none",
-};
 
 export const loginUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
@@ -133,4 +134,10 @@ export const logoutUser = asyncHandler(async (req, res) => {
     .clearCookie("accessToken", options)
     .clearCookie("refreshToken", options)
     .json(new ApiResponse(200, {}, "User Logged Out successfully"));
+});
+
+export const getCurrentUser = asyncHandler(async (req, res) => {
+  return res
+    .status(200)
+    .json(new ApiResponse(200, req.user, "Showing Current User!"));
 });

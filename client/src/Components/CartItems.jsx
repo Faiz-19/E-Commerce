@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import cross_icon from "../assets/cart_cross_icon.png";
-import { ShopContext } from "../Context/ShopContex";
+import { ShopContext } from "../Context/ShopContext";
 
 export default function CartItems() {
   const { all_product, cartItem, setCartItem } = useContext(ShopContext);

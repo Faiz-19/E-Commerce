@@ -1,7 +1,7 @@
 import { createRoot } from "react-dom/client";
 import "./index.css";
 import App from "./App.jsx";
-import ShopContextProvider from "./Context/ShopContex.jsx";
+import ShopContextProvider from "./Context/ShopContext.jsx";
 
 createRoot(document.getElementById("root")).render(
   <ShopContextProvider>

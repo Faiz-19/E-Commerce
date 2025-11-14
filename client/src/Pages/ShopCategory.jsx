@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-// import { ShopContext } from "../Context/ShopContex";
+// import { ShopContext } from "../Context/ShopContext";
 import dropdown_icon from "../assets/dropdown_icon.png";
 import Items from "../Components/Items";
 import axios from "axios";
