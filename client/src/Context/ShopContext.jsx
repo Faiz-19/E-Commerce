@@ -12,14 +12,14 @@ export default function ShopContextProvider({ children }) {
   useEffect(() => {
     const getCurrentUser = async () => {
       try {
-        const res = await axios.get("http://localhost:3000/api/user/me",{
+        const res = await axios.get("http://localhost:3000/api/user/me", {
           withCredentials: true,
         });
         const userData = res.data.data;
         setUser(userData);
         setCartItem(userData.cartData || {});
       } catch (error) {
-        console.log("No user logged in",error);
+        console.log("No user logged in", error);
         setCartItem({});
         setUser(null);
       } finally {
@@ -90,6 +90,52 @@ export default function ShopContextProvider({ children }) {
     }
   };
 
+  const addToCart = async (itemId) => {
+    const newCart = { ...cartItem };
+
+    newCart[itemId] = (newCart[itemId] || 0) + 1;
+    setCartItem(newCart);
+    // setCartItem((p) => ({ ...p, [itemId]: (p[itemId] || 0) + 1 }));
+    if (!user) {
+      return console.error("User is not Logged In");
+    }
+
+    try {
+      const res = await axios.post(
+        "http://localhost:3000/api/user/updatecart",
+        { cartItem: newCart },
+        { withCredentials: true }
+      );
+      console.log("item added");
+    } catch (error) {
+      console.error("Failed to Add", error);
+    }
+  };
+
+  const removeFromCart = async (itemId) => {
+    const newCart = { ...cartItem };
+
+    if (newCart[itemId] > 0) {
+      newCart[itemId] -= 1;
+    }
+    setCartItem(newCart);
+
+    if (!user) {
+      return console.error("User is not Logged In");
+    }
+
+    try {
+      const res = await axios.post(
+        "http://localhost:3000/api/user/updatecart",
+        { cartItem: newCart },
+        { withCredentials: true }
+      );
+      console.log("item removed");
+    } catch (error) {
+      console.error("Failed to remove", error);
+    }
+  };
+
   const contextValue = {
     login,
     logout,
@@ -98,6 +144,8 @@ export default function ShopContextProvider({ children }) {
     cartItem,
     setCartItem,
     loading,
+    addToCart,
+    removeFromCart,
   };
   if (loading) {
     return <div>Loading app...</div>; // Or a spinner component

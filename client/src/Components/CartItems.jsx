@@ -4,13 +4,13 @@ import { ShopContext } from "../Context/ShopContext";
 import axios from "axios";
 
 export default function CartItems() {
-  const { cartItem, setCartItem } = useContext(ShopContext);
+  const { cartItem, setCartItem, removeFromCart } = useContext(ShopContext);
 
   const [cartProducts, setCartProducts] = useState([]);
 
   useEffect(() => {
     const getCartProducts = async () => {
-      const productIds = Object.keys(cartItem).filter((id) => cartItem[id] < 0);
+      const productIds = Object.keys(cartItem).filter((id) => cartItem[id] > 0);
 
       if (productIds.length > 0) {
         try {
@@ -31,10 +31,6 @@ export default function CartItems() {
     getCartProducts();
   }, [cartItem]);
 
-  function removeFromCart(id) {
-    setCartItem((p) => ({ ...p, [id]: p[id] - 1 }));
-  }
-
   let totalPrice = 0;
   cartProducts.forEach((product) => {
     if (cartItem[product.id] > 0) {
@@ -42,7 +38,7 @@ export default function CartItems() {
     }
   });
 
-  if (cartProducts.length === 0) {
+  if (cartItem.length === 0) {
     return (
       <div className="text-center my-20 px-4">
         <h1 className="text-2xl font-semibold">Your cart is empty.</h1>
@@ -52,6 +48,9 @@ export default function CartItems() {
       </div>
     );
   }
+
+  // console.log(cartProducts);
+  
 
   return (
     <section className="flex flex-col items-center gap-10 my-10 px-4">
@@ -105,7 +104,7 @@ export default function CartItems() {
       </div>
 
       <div className="w-full max-w-6xl md:hidden space-y-4">
-        {all_product.map((e) => {
+        {cartProducts.map((e) => {
           if (cartItem[e.id] > 0) {
             return (
               <div key={e.id} className="border rounded-lg p-4 flex gap-4">

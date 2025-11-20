@@ -43,7 +43,6 @@ export const registerUser = asyncHandler(async (req, res) => {
     name,
     email,
     password,
-    
   });
 
   const { accessToken, refreshToken } = await generateAccessAndRefreshTokens(
@@ -140,4 +139,22 @@ export const getCurrentUser = asyncHandler(async (req, res) => {
   return res
     .status(200)
     .json(new ApiResponse(200, req.user, "Showing Current User!"));
+});
+
+export const updateCart = asyncHandler(async (req, res) => {
+  const user = await User.findByIdAndUpdate(
+    req.user._id,
+    {
+      $set: {
+        cartData: req.body.cartItem,
+      },
+    },
+    { new: true }
+  );
+
+  if (!user) {
+    throw new ApiError(400, "Error while fetching and adding product");
+  }
+
+  res.status(200).json(new ApiResponse(200, {}, "cart updated!"));
 });
