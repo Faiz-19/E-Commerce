@@ -1,11 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
 import cross_icon from "../assets/cart_cross_icon.png";
+import { useNavigate } from "react-router-dom";
 import { ShopContext } from "../Context/ShopContext";
 import axios from "axios";
 
 export default function CartItems() {
   const { cartItem, setCartItem, removeFromCart } = useContext(ShopContext);
-
+  const navigate = useNavigate();
   const [cartProducts, setCartProducts] = useState([]);
 
   useEffect(() => {
@@ -38,7 +39,7 @@ export default function CartItems() {
     }
   });
 
-  if (cartItem.length === 0) {
+  if (cartProducts.length === 0) {
     return (
       <div className="text-center my-20 px-4">
         <h1 className="text-2xl font-semibold">Your cart is empty.</h1>
@@ -152,7 +153,7 @@ export default function CartItems() {
               <p>${totalPrice.toFixed(2)}</p>
             </div>
           </div>
-          <button className="bg-red-500 w-full py-3 px-6 text-white font-semibold rounded-md hover:bg-red-600">
+          <button onClick={() => navigate("/checkout")} className="bg-red-500 w-full py-3 px-6 text-white font-semibold rounded-md hover:bg-red-600">
             PROCEED TO CHECKOUT
           </button>
         </div>

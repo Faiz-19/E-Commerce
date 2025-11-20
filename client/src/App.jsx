@@ -10,6 +10,7 @@ import Cart from "./Pages/Cart";
 import mens_banner from "./assets/banner_mens.png"
 import womens_banner from "./assets/banner_women.png"
 import kids_banner from "./assets/banner_kids.png"
+import Checkout from "./Components/Checkout";
 
 function App() {
   const router = createBrowserRouter(
@@ -24,6 +25,7 @@ function App() {
           <Route path=":productId" element={<Product/>} />
         </Route>
         <Route path="cart" element={<Cart/>} />
+        <Route path="checkout" element={<Checkout/>}></Route>
       </Route>
     )
   )

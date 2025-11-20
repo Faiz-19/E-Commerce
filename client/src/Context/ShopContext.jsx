@@ -91,14 +91,15 @@ export default function ShopContextProvider({ children }) {
   };
 
   const addToCart = async (itemId) => {
+    if (!user) {
+      console.error("User is not Logged In");
+      return;
+    }
     const newCart = { ...cartItem };
 
     newCart[itemId] = (newCart[itemId] || 0) + 1;
     setCartItem(newCart);
     // setCartItem((p) => ({ ...p, [itemId]: (p[itemId] || 0) + 1 }));
-    if (!user) {
-      return console.error("User is not Logged In");
-    }
 
     try {
       const res = await axios.post(
@@ -113,16 +114,16 @@ export default function ShopContextProvider({ children }) {
   };
 
   const removeFromCart = async (itemId) => {
+    if (!user) {
+      console.error("User is not Logged In");
+      return;
+    }
     const newCart = { ...cartItem };
 
     if (newCart[itemId] > 0) {
       newCart[itemId] -= 1;
     }
     setCartItem(newCart);
-
-    if (!user) {
-      return console.error("User is not Logged In");
-    }
 
     try {
       const res = await axios.post(
