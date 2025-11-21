@@ -11,6 +11,7 @@ import mens_banner from "./assets/banner_mens.png"
 import womens_banner from "./assets/banner_women.png"
 import kids_banner from "./assets/banner_kids.png"
 import Checkout from "./Components/Checkout";
+import Verify from "./Pages/Verify";
 
 function App() {
   const router = createBrowserRouter(
@@ -26,6 +27,7 @@ function App() {
         </Route>
         <Route path="cart" element={<Cart/>} />
         <Route path="checkout" element={<Checkout/>}></Route>
+        <Route path="success" element={<Verify/>}></Route>
       </Route>
     )
   )

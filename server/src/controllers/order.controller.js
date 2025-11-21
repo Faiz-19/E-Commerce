@@ -1,3 +1,4 @@
+import { Order } from "../models/order.model.js";
 import { Product } from "../models/product.model.js";
 import { User } from "../models/user.model.js";
 import { ApiError } from "../utils/apiError.js";
@@ -44,4 +45,29 @@ export const createPaymentIntent = asyncHandler(async (req, res) => {
         "Payment Intent Created"
       )
     );
+});
+
+export const verifyOrder = asyncHandler(async (req, res) => {
+  const { success } = req.body;
+  if (success === "true") {
+    const user = await User.findById(req.user._id);
+    const cartItems = user.cartData;
+
+    const order = await Order.create({
+      userId: req.user._id,
+      items: cartItems,
+      amount: 0,
+      address: {},
+      payment: true,
+    });
+
+    await User.findByIdAndUpdate(req.user._id, {
+      $set: {
+        cartData: {},
+      },
+    });
+    res.status(200).json(new ApiResponse(200, {}, "Paid and cart cleared!"));
+  } else {
+    res.status(200).json(new ApiResponse(200, {}, "Payment Failed"));
+  }
 });

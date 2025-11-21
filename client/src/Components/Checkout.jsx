@@ -28,12 +28,14 @@ const Checkout = () => {
           console.error("Error getting payment intent", err);
         });
     }
-  },[user,cartItem]);
+  }, [user, cartItem]);
 
   const options = {
     clientSecret,
-    theme: "stripe"
-  }
+    appearance: {
+      theme: "stripe",
+    },
+  };
 
   return (
     <div className="my-10 flex justify-center">
