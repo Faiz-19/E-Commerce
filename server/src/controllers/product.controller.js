@@ -67,3 +67,5 @@ export const getCartItems = asyncHandler(async (req, res) => {
     .status(200)
     .json(new ApiResponse(200, products, "Cart products fetched"));
 });
+
+export const addProduct = asyncHandler(async (req, res) => {});
