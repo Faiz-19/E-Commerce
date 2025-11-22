@@ -24,7 +24,11 @@ export default function LoginSignUp() {
     }
 
     if (response.success) {
-      navigate("/");
+      if (response.role === "admin") {
+        navigate("/admin");
+      } else {
+        navigate("/");
+      }
     } else {
       setError(response.message);
     }

@@ -1,5 +1,5 @@
-import { ApiError } from "../utils/apiError";
-import { asyncHandler } from "../utils/asyncHandler";
+import { ApiError } from "../utils/apiError.js";
+import { asyncHandler } from "../utils/asyncHandler.js";
 
 export const verifyAdmin = asyncHandler(async (req, res, next) => {
   if (req.user.role !== "admin") {
@@ -7,4 +7,3 @@ export const verifyAdmin = asyncHandler(async (req, res, next) => {
   }
   next();
 });
-

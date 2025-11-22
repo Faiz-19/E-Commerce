@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { createContext } from "react";
 import axios from "axios";
+import { toast } from 'react-toastify';
 
 export const ShopContext = createContext(null);
 
@@ -42,7 +43,7 @@ export default function ShopContextProvider({ children }) {
       const userData = res.data.data.user;
       setUser(userData);
       setCartItem(userData.cartData || {});
-      return { success: true };
+      return { success: true, role: userData.role };
     } catch (error) {
       console.error("Login Failed", error);
       return { success: false, message: error.response.data.message };
@@ -108,6 +109,7 @@ export default function ShopContextProvider({ children }) {
         { withCredentials: true }
       );
       console.log("item added");
+      toast.success("Item added to cart!");
     } catch (error) {
       console.error("Failed to Add", error);
     }

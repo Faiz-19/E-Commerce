@@ -28,6 +28,15 @@ export const getNewProducts = asyncHandler(async (req, res) => {
       new ApiResponse(200, newProducts, "New products fetched successfully")
     );
 });
+export const getAllProducts = asyncHandler(async (req, res) => {
+  const allProducts = await Product.find();
+  //  console.log(newProducts);
+  return res
+    .status(200)
+    .json(
+      new ApiResponse(200, allProducts, "All products fetched successfully")
+    );
+});
 
 export const getCategoryProducts = asyncHandler(async (req, res) => {
   const categoryProducts = await Product.find({
@@ -118,4 +127,16 @@ export const addProduct = asyncHandler(async (req, res) => {
   return res
     .status(200)
     .json(new ApiResponse(200, product, "New Product Added Successfully!"));
+});
+
+export const removeProduct = asyncHandler(async (req, res) => {
+  const id = req.params.id;
+
+  const product = await Product.findOneAndDelete({ id: id });
+
+  if (!product) {
+    throw new ApiError(400, "Product not found");
+  }
+
+  res.status(200).json(200, {}, "Product removed successfully");
 });

@@ -2,9 +2,22 @@ import React, { useContext } from "react";
 import star_icon from "../assets/star_icon.png";
 import star_dull_icon from "../assets/star_dull_icon.png";
 import { ShopContext } from "../Context/ShopContext";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const ProductDisplay = ({ product }) => {
-  const { addToCart } = useContext(ShopContext);
+  const { addToCart, user } = useContext(ShopContext);
+  const navigate = useNavigate();
+
+  const handleAddToCart = (id) => {
+    if (!user) {
+      toast.warning("Please Login to Add Items!");
+      navigate("/login");
+      return;
+    }
+    addToCart(id);
+    toast.success("Added to Cart!");
+  };
 
   return (
     <section className="flex flex-col lg:flex-row gap-8 lg:gap-12 w-full max-w-6xl mx-auto">
@@ -84,7 +97,7 @@ const ProductDisplay = ({ product }) => {
         </div>
         <div>
           <button
-            onClick={() => addToCart(product.id)}
+            onClick={() => handleAddToCart(product.id)}
             className="bg-red-500 w-full md:w-auto py-3 px-8 font-semibold cursor-pointer text-white rounded-md hover:bg-red-600 transition-colors"
           >
             ADD TO CART
