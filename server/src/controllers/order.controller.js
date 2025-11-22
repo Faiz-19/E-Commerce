@@ -71,3 +71,10 @@ export const verifyOrder = asyncHandler(async (req, res) => {
     res.status(200).json(new ApiResponse(200, {}, "Payment Failed"));
   }
 });
+
+export const getUserOrders = asyncHandler(async (req, res) => {
+  const orders = await Order.find({ userId: req.user._id }).sort({ date: -1 });
+  res
+    .status(200)
+    .json(new ApiResponse(200, orders, "User orders fetched successfully"));
+});

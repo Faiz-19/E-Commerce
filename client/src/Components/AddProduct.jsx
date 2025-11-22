@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const AddProduct = () => {
   const [image, setImage] = useState(false);
@@ -45,12 +46,12 @@ const AddProduct = () => {
             Accept: "application/json",
             "Content-Type": "multipart/form-data",
           },
-          withCredentials: true, // Important for the verifyJWT/Admin check
+          withCredentials: true,
         }
       );
 
       if (response.data.success) {
-        alert("Product Added Successfully");
+        toast.success("Product Added Successfully!");
         setProductDetails({
           name: "",
           image: "",
@@ -58,14 +59,16 @@ const AddProduct = () => {
           new_price: "",
           old_price: "",
           description: "",
+          isPopular: false,
+          isNew: false,
         });
         setImage(false);
       } else {
-        alert("Failed to add product");
+        toast.error("Failed to add product");
       }
     } catch (error) {
       console.error(error);
-      alert(
+      toast.error(
         "Error: " + (error.response?.data?.message || "Something went wrong")
       );
     }

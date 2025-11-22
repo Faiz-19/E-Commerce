@@ -108,8 +108,6 @@ export default function ShopContextProvider({ children }) {
         { cartItem: newCart },
         { withCredentials: true }
       );
-      console.log("item added");
-      toast.success("Item added to cart!");
     } catch (error) {
       console.error("Failed to Add", error);
     }

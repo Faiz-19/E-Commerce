@@ -2,6 +2,7 @@ import React, { useContext, useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { ShopContext } from "../Context/ShopContext";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const Verify = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -21,15 +22,19 @@ const Verify = () => {
 
           if (response.data.success) {
             setCartItem({});
-            navigate("/cart");
+            toast.success("Payment is successful")
+            navigate("/myorders");
           } else {
             navigate("/");
+            toast.error("Payment failed")
           }
         } catch (error) {
           console.log(error);
+          toast.error("Payment failed")
           navigate("/");
         }
       } else {
+        toast.error("Payment failed")
         navigate("/");
       }
     };
