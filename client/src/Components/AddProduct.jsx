@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 
 const AddProduct = () => {
   const [image, setImage] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [productDetails, setProductDetails] = useState({
     name: "",
     image: "",
@@ -27,6 +28,7 @@ const AddProduct = () => {
   };
 
   const Add_Product = async () => {
+    setLoading(true);
     const formData = new FormData();
     formData.append("name", productDetails.name);
     formData.append("old_price", productDetails.old_price);
@@ -71,9 +73,10 @@ const AddProduct = () => {
       toast.error(
         "Error: " + (error.response?.data?.message || "Something went wrong")
       );
+    } finally {
+      setLoading(false);
     }
   };
-
   return (
     <div className="w-full max-w-2xl mx-auto">
       <h2 className="text-2xl font-bold text-zinc-700 mb-6 pb-2 border-b">
@@ -217,9 +220,10 @@ const AddProduct = () => {
         </div>
         <button
           onClick={Add_Product}
+          disabled={loading}
           className="w-full bg-red-500 text-white font-semibold py-3 rounded-md hover:bg-red-600 active:bg-red-700 transition-all mt-4"
         >
-          ADD PRODUCT
+          {loading ? "Uploading..." : "ADD PRODUCT"}
         </button>
       </div>
     </div>

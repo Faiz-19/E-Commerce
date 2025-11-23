@@ -15,12 +15,12 @@ export default function Navbar() {
     totalCartItems += cartItem[item];
   }
 
-  const handleSearch = (e) => {
-    if (e.key === "Enter" && search.trim()) {
-      // You can implement a search page later, for now this placeholder is fine
-      console.log("Searching for:", search);
-    }
-  };
+  // const handleSearch = (e) => {
+  //   if (e.key === "Enter" && search.trim()) {
+  //     // You can implement a search page later, for now this placeholder is fine
+  //     console.log("Searching for:", search);
+  //   }
+  // };
 
   return (
     <nav className="flex items-center justify-between shadow-lg px-6 md:px-12 lg:px-24 py-4 relative bg-white">
@@ -96,7 +96,7 @@ export default function Navbar() {
 
       <div className="flex items-center gap-5 md:gap-8">
         {/* Search Bar */}
-        <div className="hidden lg:flex items-center border border-zinc-300 rounded-full px-3 py-1.5">
+        {/* <div className="hidden lg:flex items-center border border-zinc-300 rounded-full px-3 py-1.5">
           <input
             type="text"
             placeholder="Search..."
@@ -119,7 +119,7 @@ export default function Navbar() {
               d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
             />
           </svg>
-        </div>
+        </div> */}
 
         {user ? (
           <div className="hidden sm:flex gap-3">

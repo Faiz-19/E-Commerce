@@ -19,6 +19,8 @@ import Checkout from "./Components/Checkout";
 import Verify from "./Pages/Verify";
 import Admin from "./Pages/Admin";
 import MyOrders from "./Pages/MyOrders";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   const router = createBrowserRouter(
@@ -47,6 +49,7 @@ function App() {
           <Route path="success" element={<Verify />}></Route>
           <Route path="myorders" element={<MyOrders />}></Route>
         </Route>
+
         <Route path="admin" element={<Admin />}></Route>
       </>
     )
@@ -55,6 +58,7 @@ function App() {
   return (
     <>
       <RouterProvider router={router} />
+      <ToastContainer />
     </>
   );
 }

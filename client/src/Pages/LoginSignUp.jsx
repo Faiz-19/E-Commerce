@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 import { ShopContext } from "../Context/ShopContext";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export default function LoginSignUp() {
   const [isLogin, setIsLogin] = useState(true);
@@ -25,8 +26,10 @@ export default function LoginSignUp() {
 
     if (response.success) {
       if (response.role === "admin") {
+        toast.success("Admin Login Successful!")
         navigate("/admin");
       } else {
+        toast.success("User Login Successful!")
         navigate("/");
       }
     } else {

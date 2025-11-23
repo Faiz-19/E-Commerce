@@ -2,8 +2,6 @@ import React, { useContext, useEffect } from 'react'
 import Navbar from '../Components/Navbar'
 import { Outlet, useNavigate } from 'react-router-dom'
 import Footer from '../Components/Footer'
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import { ShopContext } from '../Context/ShopContext'
 
 export default function RootLayout() {
@@ -22,7 +20,6 @@ export default function RootLayout() {
       <Navbar />
       <Outlet />
       <Footer/>
-      <ToastContainer />
     </>
   )
 }

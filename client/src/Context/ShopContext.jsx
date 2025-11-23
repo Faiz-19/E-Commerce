@@ -132,6 +132,7 @@ export default function ShopContextProvider({ children }) {
         { withCredentials: true }
       );
       console.log("item removed");
+      toast.success("Product removed")
     } catch (error) {
       console.error("Failed to remove", error);
     }

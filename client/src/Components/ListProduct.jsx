@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import cross_icon from "../assets/cart_cross_icon.png"; // Using your existing icon
+import { toast } from "react-toastify";
 
 const ListProduct = () => {
   const [allproducts, setAllProducts] = useState([]);
 
   const fetchInfo = async () => {
     try {
-      const res = await axios.get("http://localhost:3000/api/product/all",{withCredentials:true});
+      const res = await axios.get("http://localhost:3000/api/product/all", {
+        withCredentials: true,
+      });
       setAllProducts(res.data.data);
     } catch (error) {
       console.log(error);
@@ -19,10 +22,15 @@ const ListProduct = () => {
   }, []);
 
   const remove_product = async (id) => {
-    await axios.delete(`http://localhost:3000/api/product/${id}`, {
-      withCredentials: true,
-    });
-    await fetchInfo();
+    try {
+      await axios.delete(`http://localhost:3000/api/product/${id}`, {
+        withCredentials: true,
+      });
+      await fetchInfo();
+      toast.success("Product Removed");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
